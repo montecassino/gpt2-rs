@@ -1,0 +1,19 @@
+[package]
+name = "gpt2-rs"
+version = "0.1.0"
+edition = "2024"
+
+exclude = [
+    "data/*",
+]
+
+[dependencies]
+anyhow = "1.0.99"
+candle-core = { git = "https://github.com/huggingface/candle.git", version = "0.9.1", features = ["cuda"] }
+candle-datasets = { git = "https://github.com/huggingface/candle.git", version = "0.9.1" }
+candle-nn = { git = "https://github.com/huggingface/candle.git", version = "0.9.1" }
+tiktoken-rs = "0.6.0"
+tokenizers = "0.22.0"
+
+[features]
+cuda = ["candle-core/cuda", "candle-nn/cuda"]
