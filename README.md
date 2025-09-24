@@ -22,13 +22,14 @@ gpt2-rs/
 - **Training Capabilities**: Training functionality for language models
 - **Inference Support**: Ability to generate text using trained models
 - **Rust-based**: Fast, memory-safe implementation using Rust
-
+- **CUDA Support**: Optional GPU acceleration through CUDA
 
 ## How to Run
 
 ### Prerequisites
 - Rust (1.70 or later)
 - Cargo (comes with Rust)
+- For CUDA support: NVIDIA CUDA toolkit and compatible GPU
 
 ### Building and Running
 
@@ -57,6 +58,13 @@ cargo run --features cuda -- train
 
 The training data is located in `data/the-verdict.txt`.
 
+### Inference
+
+To generate text using a trained model:
+```bash
+cargo run --features cuda -- generate
+```
+
 ## Configuration
 
 The project uses default hyperparameters for GPT-2. You can modify these in the respective source files:
@@ -67,6 +75,14 @@ The project uses default hyperparameters for GPT-2. You can modify these in the 
 ## Data Format
 
 The training data should be in text format. The project currently uses `data/the-verdict.txt` as sample data, but you can replace it with your own dataset.
+
+## Model Variants
+
+The implementation supports different GPT-2 model sizes:
+- `gpt2_124m()` - 124M parameters (default)
+- `gpt2_medium()` - 355M parameters
+- `gpt2_large()` - 762M parameters
+- `gpt2_xlarge()` - 1542M parameters
 
 ## Contributing
 
@@ -83,3 +99,19 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Note
 
 This implementation is educational and demonstrates core concepts of transformer models. For production use, consider using optimized libraries like Hugging Face Transformers or similar established implementations.
+
+## Technical Details
+
+This implementation uses:
+- [Candle](https://github.com/huggingface/candle) - A fast machine learning framework in Rust
+- [tiktoken-rs](https://github.com/gezakovacs/tiktoken-rs) - Rust implementation of OpenAI's tiktoken tokenizer
+- CUDA support for GPU acceleration (optional)
+
+The model architecture includes:
+- Multi-head attention mechanism
+- Layer normalization
+- Feed-forward networks with GELU activation
+- Positional embeddings
+- Dropout for regularization
+
+The training process uses AdamW optimizer with cross-entropy loss.
